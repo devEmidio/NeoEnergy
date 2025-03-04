@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NeoEnergy - Dashboards de Energia</title>
+  <!-- Chart.js para os gráficos -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <link rel="icon" href="./image/icon.jpg" type="image/x-icon">
+  <style>
+    /* Reset e estilos globais */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f4f4;
+      color: #333;
+      line-height: 1.6;
+    }
+    /* Navegação */
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #333;
+      padding: 1rem 2rem;
+    }
+    nav .logo a {
+      color: #fff;
+      text-decoration: none;
+      font-size: 1.5rem;
+      font-weight: bold;
+    }
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 1rem;
+    }
+    nav ul li a {
+      color: #fff;
+      text-decoration: none;
+      padding: 0.5rem;
+      transition: color 0.3s;
+    }
+    nav ul li a:hover {
+      color: #00bcd4;
+    }
+    /* Seção Hero (Home) */
+    .hero {
+      background: url('dashboard_background.jpg') no-repeat center center/cover;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .hero .texto {
+      background: rgba(0, 0, 0, 0.6);
+      padding: 2rem;
+      border-radius: 5px;
+      color: #fff;
+      max-width: 600px;
+      text-align: center;
+    }
+    .hero h1 {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+    }
+    .hero p {
+      font-size: 1.2rem;
+      margin-bottom: 1.5rem;
+    }
+    .hero button {
+      padding: 0.8rem 1.5rem;
+      border: none;
+      background: #00bcd4;
+      color: #fff;
+      font-size: 1rem;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    .hero button:hover {
+      background: #008ba3;
+    }
+    /* Seções Gerais */
+    section {
+      padding: 4rem 2rem;
+      background: #fff;
+      margin-bottom: 2rem;
+    }
+    section h2 {
+      text-align: center;
+      margin-bottom: 1rem;
+      color: #333;
+    }
+    section p {
+      max-width: 800px;
+      margin: 0 auto 2rem auto;
+      text-align: center;
+    }
+    /* Dashboards */
+    .dashboard-charts {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 2rem;
+    }
+    .chart-container {
+      width: 400px;
+      height: 300px;
+      background: #fafafa;
+      border: 1px solid #ddd;
+      padding: 1rem;
+      border-radius: 5px;
+    }
+    /* Formulário de Contato */
+    form {
+      max-width: 500px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    form input, form textarea {
+      padding: 0.8rem;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      font-size: 1rem;
+    }
+    form button {
+      padding: 0.8rem;
+      border: none;
+      background: #00bcd4;
+      color: #fff;
+      font-size: 1rem;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    form button:hover {
+      background: #008ba3;
+    }
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 1rem;
+      background: #333;
+      color: #fff;
+    }
+
+    /* Estilos para a seção "Sobre" com o background */
+    #sobre {
+      padding: 4rem 2rem;
+      background:#333;      ;
+      margin-bottom: 2rem;
+      color: #ffffff; /* Cor do texto para branco */
+    }
+
+    #sobre h2 {
+    color: #fff; /* Garante que o título seja branco */
+}
+
+#contato {
+  padding: 4rem 2rem;
+  background: #333;
+  margin-bottom: 2rem;
+  color: #fff; /* Cor do texto para branco */
+}
+
+#contato h2 {
+  color: #fff; /* Garante que o título seja branco */
+}
+
+  </style>
+</head>
+<body>
+  <!-- Barra de Navegação -->
+  <nav>
+    <div class="logo">
+      <a href="index.html">NeoEnergy</a>
+    </div>
+    <ul>
+      <li><a href="#home">Home</a></li>
+      <li><a href="#sobre">Sobre</a></li>
+      <li><a href="#dashboards">Dashboards</a></li>
+      <li><a href="#contato">Contato</a></li>
+      <li><a href="http://localhost:8501">Login</a></li>
+    </ul>
+  </nav>
+
+  <!-- Seção Home: Apresentação -->
+  <section id="home" class="hero">
+    <div class="texto">
+      <h1>Bem-vindo à NeoEnergy</h1>
+      <p>
+        Nossa plataforma gera dashboards de energia com base em faturas importadas e em dados capturados automaticamente em sites oficiais.
+        Obtenha insights precisos e otimize seu consumo com as informações que coletamos para você.
+      </p>
+      <button onclick="window.location.href='#dashboards'">Ver Dashboards</button>
+    </div>
+  </section>
+
+  <!-- Seção Sobre: Quem Somos -->
+  <section id="sobre">
+    <h2>Sobre a NeoEnergy</h2>
+    <p>
+      A NeoEnergy é uma empresa confiável e inovadora, comprometida em oferecer soluções para o monitoramento e a gestão inteligente da energia.
+      Trabalhamos com dados reais de faturas, seja via importação direta ou por meio de um bot que busca informações em sites oficiais,
+      garantindo precisão e atualizações constantes. Estamos sempre abertos a melhorias e valorizamos o feedback dos nossos clientes.
+    </p>
+  </section>
+
+  <!-- Seção Dashboards: Visualização dos Dados -->
+  <section id="dashboards">
+    <h2>Nossos Dashboards</h2>
+    <p>
+      Confira alguns exemplos dos dashboards que geramos com base nos dados das faturas. Esses gráficos ajudam a visualizar o consumo de energia,
+      identificar tendências e auxiliar na tomada de decisões.
+    </p>
+    <div class="dashboard-charts">
+      <!-- Gráfico 1: Linha de Consumo de Energia -->
+      <div class="chart-container">
+        <canvas id="chart1"></canvas>
+      </div>
+      <!-- Gráfico 2: Faturas em Valor (Barras) -->
+      <div class="chart-container">
+        <canvas id="chart2"></canvas>
+      </div>
+      <!-- Gráfico 3: Distribuição de Consumo (Pizza) -->
+      <div class="chart-container">
+        <canvas id="chart3"></canvas>
+      </div>
+      <!-- Gráfico 4: Comparativo de Faturas (Doughnut) -->
+      <div class="chart-container">
+        <canvas id="chart4"></canvas>
+      </div>
+      <!-- Gráfico 5: Desempenho Geral (Radar) -->
+      <div class="chart-container">
+        <canvas id="chart5"></canvas>
+      </div>
+    </div>
+  </section>
+
+<!-- Seção Contato -->
+<section id="contato">
+    <h2>Contato</h2>
+    <p>
+      Quer saber mais ou solicitar uma demonstração? Entre em contato conosco e descubra como podemos ajudar a otimizar seu consumo de energia.
+    </p>
+    <form action="https://formspree.io/f/mgvoggkk" method="post">
+      <input type="text" name="nome" placeholder="Seu nome" required>
+      <input type="email" name="email" placeholder="Seu e-mail" required>
+      <textarea name="mensagem" placeholder="Mensagem" required></textarea>
+      <button type="submit">Enviar</button>
+    </form>
+  </section>
+  
+
+  <!-- Footer -->
+  <footer>
+    <p>&copy; 2025 NeoEnergy. Todos os direitos reservados.</p>
+  </footer>
+
+  <!-- Scripts para os Dashboards -->
+  <script>
+    // Gráfico 1: Linha de Consumo de Energia
+    const ctx1 = document.getElementById('chart1').getContext('2d');
+    new Chart(ctx1, {
+      type: 'line',
+      data: {
+        labels: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun'],
+        datasets: [{
+          label: 'Consumo de Energia (kWh)',
+          data: [120, 150, 170, 130, 160, 180],
+          borderColor: 'rgba(75, 192, 192, 1)',
+          backgroundColor: 'rgba(75, 192, 192, 0.2)',
+          tension: 0.3,
+          fill: true
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false
+      }
+    });
+
+    // Gráfico 2: Faturas em Valor (Barras)
+    const ctx2 = document.getElementById('chart2').getContext('2d');
+    new Chart(ctx2, {
+      type: 'bar',
+      data: {
+        labels: ['Fatura 1', 'Fatura 2', 'Fatura 3', 'Fatura 4'],
+        datasets: [{
+          label: 'Valor (R$)',
+          data: [200, 250, 220, 270],
+          backgroundColor: [
+            'rgba(255, 99, 132, 0.5)',
+            'rgba(54, 162, 235, 0.5)',
+            'rgba(255, 206, 86, 0.5)',
+            'rgba(75, 192, 192, 0.5)'
+          ],
+          borderColor: [
+            'rgba(255, 99, 132, 1)',
+            'rgba(54, 162, 235, 1)',
+            'rgba(255, 206, 86, 1)',
+            'rgba(75, 192, 192, 1)'
+          ],
+          borderWidth: 1
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        scales: {
+          y: {
+            beginAtZero: true
+          }
+        }
+      }
+    });
+
+    // Gráfico 3: Distribuição de Consumo (Pizza)
+    const ctx3 = document.getElementById('chart3').getContext('2d');
+    new Chart(ctx3, {
+      type: 'pie',
+      data: {
+        labels: ['Residencial', 'Comercial', 'Industrial'],
+        datasets: [{
+          data: [300, 150, 100],
+          backgroundColor: [
+            'rgba(255, 99, 132, 0.6)',
+            'rgba(54, 162, 235, 0.6)',
+            'rgba(255, 206, 86, 0.6)'
+          ],
+          borderColor: [
+            'rgba(255, 99, 132, 1)',
+            'rgba(54, 162, 235, 1)',
+            'rgba(255, 206, 86, 1)'
+          ],
+          borderWidth: 1
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+      }
+    });
+
+    // Gráfico 4: Comparativo de Faturas (Doughnut)
+    const ctx4 = document.getElementById('chart4').getContext('2d');
+    new Chart(ctx4, {
+      type: 'doughnut',
+      data: {
+        labels: ['Jan', 'Fev', 'Mar', 'Abr'],
+        datasets: [{
+          data: [50, 60, 70, 80],
+          backgroundColor: [
+            'rgba(75, 192, 192, 0.6)',
+            'rgba(153, 102, 255, 0.6)',
+            'rgba(255, 159, 64, 0.6)',
+            'rgba(255, 99, 132, 0.6)'
+          ],
+          borderColor: [
+            'rgba(75, 192, 192, 1)',
+            'rgba(153, 102, 255, 1)',
+            'rgba(255, 159, 64, 1)',
+            'rgba(255, 99, 132, 1)'
+          ],
+          borderWidth: 1
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+      }
+    });
+
+    // Gráfico 5: Desempenho Geral (Radar)
+    const ctx5 = document.getElementById('chart5').getContext('2d');
+    new Chart(ctx5, {
+      type: 'radar',
+      data: {
+        labels: ['Consumo', 'Economia', 'Eficiência', 'Sustentabilidade', 'Custo'],
+        datasets: [{
+          label: 'Desempenho',
+          data: [65, 59, 90, 81, 56],
+          backgroundColor: 'rgba(255, 206, 86, 0.2)',
+          borderColor: 'rgba(255, 206, 86, 1)',
+          borderWidth: 1
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+      }
+    });
+  </script>
+</body>
+</html>
